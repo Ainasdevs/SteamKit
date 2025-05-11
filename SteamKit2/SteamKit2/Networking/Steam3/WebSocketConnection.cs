@@ -22,6 +22,7 @@ namespace SteamKit2
         public event EventHandler<DisconnectedEventArgs>? Disconnected;
 
         public EndPoint? CurrentEndPoint { get; set; }
+        public Proxy? Proxy { get; set; }
         public ProtocolTypes ProtocolTypes => ProtocolTypes.WebSocket;
 
         public void Connect(EndPoint endPoint, int timeout = 5000)

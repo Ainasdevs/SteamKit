@@ -19,7 +19,14 @@ namespace SteamKit2
                 EndPoint = endPoint ?? throw new ArgumentNullException( nameof( endPoint ) );
 
                 cts = new CancellationTokenSource();
+                
                 socket = new ClientWebSocket();
+                if ( connection.Proxy is not null )
+                {
+                    socket.Options.Proxy = new WebProxy(ProxyToUri(connection.Proxy));
+                }
+                
+                
                 connectionUri = ConstructUri(endPoint);
             }
 
@@ -234,6 +241,24 @@ namespace SteamKit2
                 }
 
                 return uri.Uri;
+            }
+            
+            private static Uri ProxyToUri(Proxy proxy)
+            {
+                var builder = new UriBuilder
+                {
+                    Scheme = proxy.Scheme.ToString().ToLowerInvariant(),
+                    Host = proxy.Host,
+                    Port = proxy.Port
+                };
+
+                if (!string.IsNullOrEmpty(proxy.Username) && !string.IsNullOrEmpty(proxy.Password))
+                {
+                    builder.UserName = proxy.Username;
+                    builder.Password = proxy.Password;
+                }
+
+                return builder.Uri;
             }
         }
     }

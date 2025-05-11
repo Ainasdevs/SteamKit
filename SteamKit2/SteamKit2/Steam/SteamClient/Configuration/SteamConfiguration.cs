@@ -110,6 +110,11 @@ namespace SteamKit2
         /// Keys can be obtained from https://steamcommunity.com/dev or the Steamworks Partner site.
         /// </summary>
         public string WebAPIKey => state.WebAPIKey;
+        
+        /// <summary>
+        /// The proxy to use when connecting to Steam CM servers.
+        /// </summary>
+        public Proxy? Proxy => state.Proxy;
 
         /// <summary>
         /// The server list used for this configuration.

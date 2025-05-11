@@ -95,5 +95,12 @@ namespace SteamKit2
         /// Keys can be obtained from https://steamcommunity.com/dev or the Steamworks Partner site.</param>
         /// <returns>A builder with modified configuration.</returns>
         ISteamConfigurationBuilder WithWebAPIKey(string webApiKey);
+        
+        /// <summary>
+        /// Configures this <see cref="SteamConfiguration" /> with a proxy to use when connecting to Steam CM servers.
+        /// </summary>
+        /// <param name="proxy">The proxy to use when connecting.</param>
+        /// <returns>A builder with modified configuration.</returns>
+        ISteamConfigurationBuilder WithProxy(Proxy proxy);
     }
 }

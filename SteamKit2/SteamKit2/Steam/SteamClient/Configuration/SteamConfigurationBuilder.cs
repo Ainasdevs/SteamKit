@@ -115,6 +115,12 @@ namespace SteamKit2
             state.WebAPIKey = webApiKey ?? throw new ArgumentNullException(nameof(webApiKey));
             return this;
         }
+        
+        public ISteamConfigurationBuilder WithProxy(Proxy proxy)
+        {
+            state.Proxy = proxy;
+            return this;
+        }
 
         static HttpClient DefaultHttpClientFactory()
         {

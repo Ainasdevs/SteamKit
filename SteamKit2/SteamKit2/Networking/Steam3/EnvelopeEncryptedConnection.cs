@@ -29,6 +29,11 @@ namespace SteamKit2
         IDebugNetworkListener? debugNetworkListener;
 
         public EndPoint? CurrentEndPoint => inner.CurrentEndPoint;
+        public Proxy? Proxy
+        {
+            get => inner.Proxy;
+            set => inner.Proxy = value;
+        }
 
         public ProtocolTypes ProtocolTypes => inner.ProtocolTypes;
 

@@ -22,5 +22,6 @@ namespace SteamKit2
         public EUniverse Universe;
         public Uri WebAPIBaseAddress;
         public string WebAPIKey;
+        public Proxy? Proxy;
     }
 }

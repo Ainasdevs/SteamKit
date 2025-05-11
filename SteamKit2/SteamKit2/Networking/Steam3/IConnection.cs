@@ -32,6 +32,8 @@ namespace SteamKit2
         /// Occurs when the physical connection is broken.
         /// </summary>
         event EventHandler<DisconnectedEventArgs>? Disconnected;
+        
+        Proxy? Proxy { get; set; }
 
         /// <summary>
         /// Connects to the specified end point.

@@ -175,10 +175,16 @@ namespace SteamKit2.Internal
                 ExpectDisconnection = false;
 
                 Task<ServerRecord?> recordTask;
+                
+                var supportedProtocols = Configuration.ProtocolTypes;
+                if ( Configuration.Proxy is not null )
+                {
+                    supportedProtocols &= ~ProtocolTypes.Udp;
+                }
 
                 if ( cmServer == null )
                 {
-                    recordTask = Servers.GetNextServerCandidateAsync( Configuration.ProtocolTypes );
+                    recordTask = Servers.GetNextServerCandidateAsync( supportedProtocols );
                 }
                 else
                 {
@@ -209,7 +215,8 @@ namespace SteamKit2.Internal
                         return;
                     }
 
-                    var newConnection = CreateConnection( record.ProtocolTypes & Configuration.ProtocolTypes );
+                    var newConnection = CreateConnection( record.ProtocolTypes & supportedProtocols );
+                    newConnection.Proxy = Configuration.Proxy;
 
                     var connectionRelease = Interlocked.Exchange( ref connection, newConnection );
                     DebugLog.Assert( connectionRelease == null, nameof( CMClient ), "Connection was set during a connect, did you call CMClient.Connect() on multiple threads?" );
