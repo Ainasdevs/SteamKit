@@ -23,7 +23,10 @@ namespace SteamKit2
                 socket = new ClientWebSocket();
                 if ( connection.Proxy is not null )
                 {
-                    socket.Options.Proxy = new WebProxy(ProxyToUri(connection.Proxy));
+                    socket.Options.Proxy = new WebProxy {
+                        Address = new Uri($"{connection.Proxy.Scheme.ToString().ToLowerInvariant()}://{connection.Proxy.Host}:{connection.Proxy.Port}"),
+                        Credentials = new NetworkCredential(connection.Proxy.Username, connection.Proxy.Password)
+                    };
                 }
                 
                 
@@ -241,24 +244,6 @@ namespace SteamKit2
                 }
 
                 return uri.Uri;
-            }
-            
-            private static Uri ProxyToUri(Proxy proxy)
-            {
-                var builder = new UriBuilder
-                {
-                    Scheme = proxy.Scheme.ToString().ToLowerInvariant(),
-                    Host = proxy.Host,
-                    Port = proxy.Port
-                };
-
-                if (!string.IsNullOrEmpty(proxy.Username) && !string.IsNullOrEmpty(proxy.Password))
-                {
-                    builder.UserName = proxy.Username;
-                    builder.Password = proxy.Password;
-                }
-
-                return builder.Uri;
             }
         }
     }

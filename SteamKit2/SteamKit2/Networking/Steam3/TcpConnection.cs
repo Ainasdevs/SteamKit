@@ -172,7 +172,8 @@ namespace SteamKit2
 
                 using ( connectCancellation.Token.Register( s => ( ( Socket )s! ).Dispose(), socket ) )
                 {
-                    socket.Connect( CurrentEndPoint );
+                    if ( socket is ProxySocket proxySocket ) proxySocket.Connect( ToIpEndPoint( CurrentEndPoint ) ); // TODO: Update the proxy socket lib to correctly handle DNS endpoints
+                    else socket.Connect( CurrentEndPoint );
                 }
             }
             catch ( SocketException ) when ( cancellationToken.IsCancellationRequested )
